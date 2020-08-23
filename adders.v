@@ -1,42 +1,53 @@
-module half_adder(A, B, S, Co);
-    input A,B;
-    output S,Co;
+// Half Adder
+module half_adder(
+  input  A, B, // Input Operands
+  output S,    // Sum
+  output Co);  // Carry Out
 
-    xor ha_xor(S,A,B);
-    and ha_and(Co,A,B);
+  parameter DLY = 5; // Gate Delay
+
+  xor #DLY ha_xor(S,A,B); //Compute Sum
+  and #DLY ha_and(Co,A,B);//Compute Carry Out
 endmodule
 
-module full_adder(A,B,Ci,S,Co);
-    input A,B,Ci;
-    output S,Co;
+// Full Adder
+module full_adder(
+  input  A,B, // Input Operands
+  input  Ci,  // Carry In
+  output S,   // Sum
+  output Co); // Carry Out
+  
+  parameter DLY = 5;    // Gate Delay
+  wire xor1,nand1,nand2;// Intermediary nodes
 
-    wire xor1,nand1,nand2;
-
-    xor  #5 G1(xor1,A,B);
-    xor  #5 G2(S,xor1,Ci);
-    nand #5 G3(nand1,xor1,Ci);
-    nand #5 G4(nand2,A,B);
-    nand #5 G5(Co,nand1,nand2);
+  // Compute Sum
+  xor  #5 G1(xor1,A,B);
+  xor  #5 G2(S,xor1,Ci);
+  // Compute Carry Out
+  nand #5 G3(nand1,xor1,Ci);
+  nand #5 G4(nand2,A,B);
+  nand #5 G5(Co,nand1,nand2);
 endmodule
 
-module ripple_carry_adder(A,B,Ci,S,Co);
-    parameter W = 4;
+// W-bit Ripple Carry Adder
+module ripple_carry_adder(
+  input  [W-1:0] A,B, // W-bit Input Operands
+  input          Ci,  // Carry In
+  output [W-1:0] S,   // W-bit Sum
+  output         Co); // Carry Out
 
-    input[W-1:0] A,B;
-    input Ci;
-    output[W-1:0] S;
-    output Co;
+  parameter W = 4; //Operand Width
 
-    wire[W:0] carry;
+  wire[W:0] carry; // Intermediary Nodes, note array size is W, not W-1
 
-    generate 
-        genvar i;
-        for (i=0; i < W; i=i+1) begin
-            full_adder fa_inst(A[i],B[i],carry[i],S[i],carry[i+1]);
-        end
-    endgenerate
+  // Hook up W full adders to implement ripple carry
+  generate genvar i;
+    for (i=0; i < W; i=i+1) begin
+      full_adder fa_inst(A[i],B[i],carry[i],S[i],carry[i+1]);
+    end
+  endgenerate
 
-    assign carry[0] = Ci;
-    assign Co = carry[W];
-
+  // Handle fencepost problem by hooking up Carry In and Out
+  assign carry[0] = Ci; //Ci is an input
+  assign Co = carry[W]; //Co is an output
 endmodule

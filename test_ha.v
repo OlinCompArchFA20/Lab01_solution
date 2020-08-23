@@ -1,19 +1,33 @@
+// Testbench for Half Adder
 module test_HA;
-    reg A,B;
-    wire S,Co;
+  // Regs and wires for input/output
+  reg A,B;
+  wire S,Co;
 
-    half_adder HA(A,B,S,Co);
+  //Instantiate your "Device Under Test"
+  half_adder DUT(A,B,S,Co);
 
-    initial begin
-        $dumpfile("test.vcd");
-        $dumpvars(0,test_HA);
+  initial begin
+    // Hooks for vvp/gtkwave
+    $dumpfile("test_ha.vcd");
+    $dumpvars(0,test_HA);
 
-        $display("A B | S Co");
-        $display("-------------");
+    // Fancy Formatting
+    $display("A B | S Co");
+    $display("-------------");
 
-        for (int i=0; i < 4; i=i+1) begin
-            {A,B} = i;
-            #50 $display("%b %b | %b  %b",A,B,S,Co);
-        end
+    // Make things easy for ourselves with for loops
+    // and wire bundle assignments
+    for (int i=0; i < 4; i=i+1) begin
+      {A,B} = i; // The order here doesn't matter
+      #50           // Wait a bit for things to settle
+
+      // Let's do some self checking, shall we?
+      // This time the wire bundle order DOES matter
+      if (A+B != {Co,S}) 
+        $display("%b %b | %b  %b FAIL",A,B,S,Co);
+      else
+        $display("%b %b | %b  %b PASS",A,B,S,Co);
     end
+  end
 endmodule
