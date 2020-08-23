@@ -21,12 +21,12 @@ module full_adder(
   wire xor1,nand1,nand2;// Intermediary nodes
 
   // Compute Sum
-  xor  #5 G1(xor1,A,B);
-  xor  #5 G2(S,xor1,Ci);
+  xor  #DLY G1(xor1,A,B);
+  xor  #DLY G2(S,xor1,Ci);
   // Compute Carry Out
-  nand #5 G3(nand1,xor1,Ci);
-  nand #5 G4(nand2,A,B);
-  nand #5 G5(Co,nand1,nand2);
+  nand #DLY G3(nand1,xor1,Ci);
+  nand #DLY G4(nand2,A,B);
+  nand #DLY G5(Co,nand1,nand2);
 endmodule
 
 // W-bit Ripple Carry Adder
