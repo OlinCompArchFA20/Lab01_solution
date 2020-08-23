@@ -42,9 +42,10 @@ You'll find module stubs in ``adders.v``, like this:
       // Your Code Here!
     endmodule
 
-You'll also need to test your code, so you can make use of the ``test_ha.v`` and
-``test_fa.v`` testbench stubs that we've provided. To test your half adder, you
-can do the following:
+You'll also need to test your code, so you can make use of the ``test_ha.v``
+testbench and ``test_fa.v`` testbench stub  that we've provided. Have a look at
+the half adder testbench and really try to understand it before moving on to the
+other testbenches. To test your half adder, you can do the following:
 
     make test_ha.bin
     ./test_ha.bin
@@ -78,7 +79,15 @@ Exhaustively test the adder in a testbench making use of self checking code.
 Submit a link to Canvas for your group's git repo for this part.
 
 Fill out the code stub in ``adders.v`` for your 4-bit ripple carry adder, and
-test your adder with ``test_ripple.v``.
+test your adder with ``test_ripple.v``. You can either build a self-checking
+testbench in Verilog or wrap your verilog in another layer of scripting, like
+with Python.
+
+As part of your lab submission, please include a screenshot of all the
+transitions on the SUM bus in gtkwave for a few additions. Just commit a
+screenshot as ``sum_bus.jpg`` or PNG to the root of your repo. Explain the
+behavior of the SUM bus in ``sum_bus.txt``, also in your repo root.
+
 
 ### Why
 
