@@ -10,6 +10,13 @@ The key concepts we're covering in this lab are digital logic and how to
 implement gates in Verilog. You're not looking to be a verilog expert by the end
 of the lab--it's just a tool.
 
+Don't forget about verilator as a lint tool. Icarus Verilog has notoriously bad feedback.
+
+	verilator_bin --lint-only your_verilog_file.v
+
+Verilator is far more paranoid than Icarus Varilog, but gives much better feedback.
+  
+
 ## Part 1 - Single-Bit Adders 
 
 ### What
