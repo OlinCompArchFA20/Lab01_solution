@@ -23,8 +23,7 @@ Verilator is far more paranoid than Icarus Varilog, but gives much better feedba
 
 Implement a half and a full adder in Verilog and demonstrate functionality by
 stepping through all rows of the truth table in your testbench. Complete this by
-yourself, and submit a link to Canvas for _your_ git repo for this part.
-
+yourself, and submit a link to Canvas for _your_ git repo for this part.  
 Make sure that you implement the adders using _structural_ Verilog! You can use
 any of the following gates: AND, OR, NAND, NOR, NOT, XOR, XNOR.
 
@@ -65,11 +64,22 @@ waveforms in gtkwave, you can do the following:
     gtkwave test_ha.vcd
 
 Note that for gtkwave to work, you have to have a correctly compiling Verilog
-codebase.
+codebase. Here's what it should look like for your half adder, after you've
+plotted all signals:
+
+![test_ha](img/gtkwave_ha.jpg)
 
 The most common issues with your code are going to be missing semicolons. Check
 for that first. iVerilog has some pretty abysmal feedback on syntax errors (as
 do many tools), so this will be a bit of a trial by fire.
+
+You can use verilator to get some more helpful feedback by running something
+like:
+
+    verilator_bin --lint-only test_ha.v ha.v
+
+Note that verilator is way more paranoid than iverilog, so expect a bunch of
+scary looking warnings which you can mostly ignore.
 
 ### Why
 
