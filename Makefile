@@ -8,7 +8,7 @@ IVERILOG=iverilog -Wall -g2012
 VVP=vvp
 
 # Our designs are in adders.v
-INCLUDES=adders.v
+INCLUDES=fa.v ha.v ripple.v
 
 # Look up .PHONY rules for Makefiles
 .PHONY: clean
